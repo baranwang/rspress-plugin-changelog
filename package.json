@@ -6,7 +6,9 @@
   "types": "dist/cjs/index.d.ts",
   "scripts": {
     "dev": "rslib build -w",
-    "build": "rslib build"
+    "build": "rslib build",
+    "demo:dev": "rspress dev",
+    "demo:build": "rspress build"
   },
   "keywords": [
     "rspress-plugin"
@@ -22,6 +24,7 @@
     "@rslib/core": "^0.0.9",
     "@rspress/shared": "^1.32.0",
     "@types/node": "^22.7.5",
+    "rspress": "^1.32.0",
     "typescript": "^5.6.3"
   },
   "publishConfig": {

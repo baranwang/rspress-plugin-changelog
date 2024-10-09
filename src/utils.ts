@@ -16,13 +16,17 @@ export const getTemplate = (templatePath: string | undefined, defaultTemplate: s
   return handlebars.compile(fs.readFileSync(templatePath).toString());
 };
 
+function clearNotes(content: string): string {
+  return content.replace(/<!--[\s\S]*?-->/g, '').trim();
+}
+
 export async function getGithubReleases(repo: string): Promise<any[]> {
   try {
     let releases = [];
     logger.start(`Fetching releases for ${repo}...`);
     const resp = await fetch(`https://api.github.com/repos/${repo}/releases`).then((res) => res.json());
     if (Array.isArray(resp)) {
-      releases = resp;
+      releases = resp.map((item) => ({ ...item, body: clearNotes(item.body) }));
     } else {
       logger.error('Failed to fetch releases', resp);
     }
@@ -40,7 +44,7 @@ export async function getGitlabReleases(repo: string, { baseUrl = 'https://gitla
     const url = new URL(`/api/v4/projects/${encodeURIComponent(repo)}/releases`, baseUrl);
     const resp = await fetch(url.toString(), { headers }).then((res) => res.json());
     if (Array.isArray(resp)) {
-      releases = resp;
+      releases = resp.map((item) => ({ ...item, description: clearNotes(item.description) }));
     } else {
       logger.error('Failed to fetch releases', resp);
     }
