@@ -1,0 +1,36 @@
+{
+  "name": "rspress-plugin-changelog",
+  "version": "1.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "dev": "rslib build -w",
+    "build": "rslib build"
+  },
+  "keywords": [
+    "rspress-plugin"
+  ],
+  "author": "baranwang",
+  "license": "MIT",
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "rslog": "^1.2.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.3",
+    "@rslib/core": "^0.0.9",
+    "@rspress/shared": "^1.32.0",
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}
