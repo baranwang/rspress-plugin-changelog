@@ -45,7 +45,7 @@ export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = '
       for (const item of items) {
         if (needFetch) {
           if (item.type === 'github-releases') {
-            const releases = getGithubReleases(item.repo);
+            const releases = await getGithubReleases(item.repo);
             const template = getTemplate(item.templatePath, DEFAULT_TEMPLATES.GITHUB_RELEASES);
             pages.push({
               routePath: getRoutePath(routePrefix, item.routePath),
@@ -53,7 +53,7 @@ export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = '
             });
           }
           if (item.type === 'gitlab-releases') {
-            const releases = getGitlabReleases(item.repo, { baseUrl: item.baseUrl, headers: item.headers });
+            const releases = await getGitlabReleases(item.repo, { baseUrl: item.baseUrl, headers: item.headers });
             const template = getTemplate(item.templatePath, DEFAULT_TEMPLATES.GITLAB_RELEASES);
             pages.push({
               routePath: getRoutePath(routePrefix, item.routePath),
