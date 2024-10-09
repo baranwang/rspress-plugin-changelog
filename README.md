@@ -5,7 +5,7 @@ This plugin generates changelog pages for your Rspress documentation site, fetch
 ## Installation
 
 ```bash
-npm install @rspress/plugin-changelog
+npm install rspress-plugin-changelog
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ Add the plugin to your Rspress configuration file:
 
 ```javascript
 import { defineConfig } from 'rspress/config';
-import { pluginChangelog } from '@rspress/plugin-changelog';
+import { pluginChangelog } from 'rspress-plugin-changelog';
 
 export default defineConfig({
   plugins: [
