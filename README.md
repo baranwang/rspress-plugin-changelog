@@ -41,6 +41,14 @@ export default defineConfig({
 });
 ```
 
+## Features
+
+- Fetches release information from GitHub and GitLab repositories.
+- Generates changelog pages with customizable routes.
+- Supports [custom templates](#custom-templates) for rendering changelogs.
+- Automatically adds changelog links to the sidebar (configurable).
+- Allows fetching data in both production and development environments.
+
 ## Configuration Options
 
 The `pluginChangelog` function accepts an options object with the following properties:
@@ -72,16 +80,30 @@ Each item in the `items` array can have the following properties:
 - `title` (string, optional): The title for the changelog page.
 - `templatePath` (string, optional): Custom template path for rendering the changelog.
 
-## Features
+## Custom Templates
 
-- Fetches release information from GitHub and GitLab repositories.
-- Generates changelog pages with customizable routes.
-- Supports custom templates for rendering changelogs.
-- Automatically adds changelog links to the sidebar (configurable).
-- Allows fetching data in both production and development environments.
+This plugin supports custom templates for rendering changelogs. Templates use Handlebars syntax and have access to two main variables:
+
+- `title`: The title of the changelog (either specified in the configuration or defaulting to the repository name).
+- `releases`: An array of release objects from GitHub or GitLab.
+
+To use a custom template, specify the `templatePath` in your changelog item configuration.
+
+### Template Variables
+
+#### GitHub Releases
+
+[Release Object](https://docs.github.com/en/rest/releases/releases)
+
+#### GitLab Releases
+
+[Release Object](https://docs.gitlab.com/ee/api/releases)
+
 
 ## Demo
-https://baranwang.github.io/rspress-plugin-changelog/demo/rspack
+
+- https://github.com/baranwang/rspress-plugin-changelog/blob/main/rspress.config.ts#L13-L41
+- https://baranwang.github.io/rspress-plugin-changelog/demo/rspack
 
 ## License
 

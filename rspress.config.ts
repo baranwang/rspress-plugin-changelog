@@ -15,9 +15,9 @@ export default defineConfig({
       items: [
         {
           type: 'github-releases',
-          title: 'Repack',
+          title: 'Rspack',
           routePath: 'rspack',
-          repo: 'web-infra-dev/rsbuild',
+          repo: 'web-infra-dev/rspack',
         },
         {
           type: 'github-releases',
