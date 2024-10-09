@@ -4,6 +4,7 @@ import { defineConfig } from 'rspress/config';
 import { pluginChangelog } from '.';
 
 export default defineConfig({
+  base: '/rspress-plugin-changelog/',
   root: path.join(__dirname, 'docs'),
   title: 'rspress-plugin-changelog',
   themeConfig: {

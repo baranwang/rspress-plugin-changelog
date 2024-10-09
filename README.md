@@ -80,6 +80,9 @@ Each item in the `items` array can have the following properties:
 - Automatically adds changelog links to the sidebar (configurable).
 - Allows fetching data in both production and development environments.
 
+## Demo
+https://baranwang.github.io/rspress-plugin-changelog/demo/rspack
+
 ## License
 
 [MIT License](LICENSE)
