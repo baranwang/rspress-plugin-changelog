@@ -99,6 +99,11 @@ To use a custom template, specify the `templatePath` in your changelog item conf
 
 [Release Object](https://docs.gitlab.com/ee/api/releases)
 
+## Showcase
+
+- [iRingo](https://nsringo.github.io/)
+- [DualSubs](https://dualsubs.github.io/)
+- [BiliUniverse](https://biliuniverse.io/)
 
 ## Demo
 
