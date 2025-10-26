@@ -1,9 +1,10 @@
-import type { AdditionalPage, RspressPlugin } from '@rspress/shared';
-import { DEFAULT_TEMPLATES } from './constants';
-import { clearRoute, getGithubReleases, getGitlabReleases, getRoutePath, getTemplate } from './utils';
+import type { RspressPlugin } from "@rspress/core";
+import type { AdditionalPage } from "@rspress/shared";
+import { DEFAULT_TEMPLATES } from "./constants";
+import { clearRoute, getGithubReleases, getGitlabReleases, getRoutePath, getTemplate } from "./utils";
 
 interface GithubReleasesItem {
-  type: 'github-releases';
+  type: "github-releases";
   routePath: string;
   repo: `${string}/${string}`;
   title?: string;
@@ -11,7 +12,7 @@ interface GithubReleasesItem {
 }
 
 interface GitLabReleasesItem {
-  type: 'gitlab-releases';
+  type: "gitlab-releases";
   routePath: string;
   repo: `${string}/${string}`;
   /**
@@ -32,19 +33,24 @@ export interface ChangelogPluginOptions {
   fetchOnDev?: boolean;
   items: Array<GithubReleasesItem | GitLabReleasesItem>;
   routePrefix?: string;
-  addSidebar?: boolean | 'auto';
+  addSidebar?: boolean | "auto";
 }
 
-export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = 'changelog', addSidebar = 'auto' }: ChangelogPluginOptions): RspressPlugin {
+export function pluginChangelog({
+  fetchOnDev = true,
+  items = [],
+  routePrefix = "changelog",
+  addSidebar = "auto",
+}: ChangelogPluginOptions): RspressPlugin {
   return {
-    name: 'plugin-changelog',
+    name: "plugin-changelog",
 
     addPages: async (_, isProd) => {
       const needFetch = isProd || fetchOnDev;
       const pages: AdditionalPage[] = [];
       for (const item of items) {
         if (needFetch) {
-          if (item.type === 'github-releases') {
+          if (item.type === "github-releases") {
             const releases = await getGithubReleases(item.repo);
             const template = getTemplate(item.templatePath, DEFAULT_TEMPLATES.GITHUB_RELEASES);
             pages.push({
@@ -52,7 +58,7 @@ export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = '
               content: template({ releases, title: item.title || item.repo }),
             });
           }
-          if (item.type === 'gitlab-releases') {
+          if (item.type === "gitlab-releases") {
             const releases = await getGitlabReleases(item.repo, { baseUrl: item.baseUrl, headers: item.headers });
             const template = getTemplate(item.templatePath, DEFAULT_TEMPLATES.GITLAB_RELEASES);
             pages.push({
@@ -63,7 +69,7 @@ export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = '
         } else {
           pages.push({
             routePath: getRoutePath(routePrefix, item.routePath),
-            content: ':::tip\n已关闭开发环境拉取 Changelog 功能\n:::',
+            content: ":::tip\n已关闭开发环境拉取 Changelog 功能\n:::",
           });
         }
       }
@@ -73,7 +79,7 @@ export function pluginChangelog({ fetchOnDev = true, items = [], routePrefix = '
       if (!addSidebar) {
         return config;
       }
-      if (addSidebar === 'auto' && items.length === 1) {
+      if (addSidebar === "auto" && items.length === 1) {
         return config;
       }
       config.themeConfig ??= {};

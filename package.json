@@ -1,9 +1,20 @@
 {
   "name": "rspress-plugin-changelog",
   "version": "1.1.2",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "rslib build -w",
     "build": "rslib build",
@@ -20,11 +31,11 @@
     "rslog": "^1.2.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.3",
-    "@rslib/core": "^0.0.9",
-    "@rspress/shared": "^1.32.0",
+    "@biomejs/biome": "^2.3.0",
+    "@rslib/core": "^0.16.1",
+    "@rspress/core": "^2.0.0-beta.34",
+    "@rspress/shared": "^2.0.0-beta.34",
     "@types/node": "^22.7.5",
-    "rspress": "^1.32.0",
     "typescript": "^5.6.3"
   },
   "publishConfig": {

@@ -1,9 +1,9 @@
-import { logger } from 'rslog';
-import handlebars from 'handlebars';
-import fs from 'node:fs';
-import { URL } from 'node:url';
+import fs from "node:fs";
+import { URL } from "node:url";
+import handlebars from "handlebars";
+import { logger } from "rslog";
 
-export const clearRoute = (route: string): string => route.replace(/(^\/|\/$)/g, '');
+export const clearRoute = (route: string): string => route.replace(/(^\/|\/$)/g, "");
 
 export const getRoutePath = (routePrefix: string, routePath: string): string => {
   return `/${clearRoute(routePrefix)}/${clearRoute(routePath)}`;
@@ -17,27 +17,31 @@ export const getTemplate = (templatePath: string | undefined, defaultTemplate: s
 };
 
 function clearNotes(content: string): string {
-  return content.replace(/<!--[\s\S]*?-->/g, '').trim();
+  return content.replace(/<!--[\s\S]*?-->/g, "").trim();
 }
 
 export async function getGithubReleases(repo: string): Promise<any[]> {
   try {
     let releases = [];
     logger.start(`Fetching releases for ${repo}...`);
-    const resp = await fetch(`https://api.github.com/repos/${repo}/releases`).then((res) => res.json());
+    const headers = new Headers();
+    if (process.env.GITHUB_TOKEN) {
+      headers.set("Authorization", `Bearer ${process.env.GITHUB_TOKEN}`);
+    }
+    const resp = await fetch(`https://api.github.com/repos/${repo}/releases`, { headers }).then((res) => res.json());
     if (Array.isArray(resp)) {
       releases = resp.map((item) => ({ ...item, body: clearNotes(item.body) }));
     } else {
-      logger.error('Failed to fetch releases', resp);
+      logger.error("Failed to fetch releases", resp);
     }
     return releases;
   } catch (error) {
-    logger.error('Failed to fetch releases', error);
+    logger.error("Failed to fetch releases", error);
     return [];
   }
 }
 
-export async function getGitlabReleases(repo: string, { baseUrl = 'https://gitlab.com', headers = {} } = {}) {
+export async function getGitlabReleases(repo: string, { baseUrl = "https://gitlab.com", headers = {} } = {}) {
   try {
     let releases = [];
     logger.start(`Fetching releases for ${repo}...`);
@@ -46,10 +50,10 @@ export async function getGitlabReleases(repo: string, { baseUrl = 'https://gitla
     if (Array.isArray(resp)) {
       releases = resp.map((item) => ({ ...item, description: clearNotes(item.description) }));
     } else {
-      logger.error('Failed to fetch releases', resp);
+      logger.error("Failed to fetch releases", resp);
     }
   } catch (error) {
-    logger.error('Failed to fetch releases', error);
+    logger.error("Failed to fetch releases", error);
     return [];
   }
 }
